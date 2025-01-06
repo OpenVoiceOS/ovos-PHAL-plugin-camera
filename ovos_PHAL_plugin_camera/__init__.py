@@ -185,9 +185,23 @@ class PHALCamera(PHALPlugin):
         frame = self.camera.get_frame()
         pic_path = message.data.get("path")
         if pic_path:
-            cv2.imwrite(os.path.expanduser(pic_path), frame)
-            self.bus.emit(message.response({"path": pic_path}))
-        # send data b64 encoded instead
+            if pic_path:
+                try:
+                    pic_path = os.path.expanduser(pic_path)
+                    # Ensure the directory exists
+                    os.makedirs(os.path.dirname(pic_path), exist_ok=True)
+                    # Validate path is within allowed directories
+                    if not os.path.abspath(pic_path).startswith(os.path.expanduser("~")):
+                        raise ValueError("Path must be within user directory")
+                    # Write the image
+                    if cv2.imwrite(pic_path, frame):
+                        self.bus.emit(message.response({"path": pic_path}))
+                    else:
+                        raise IOError("Failed to write image")
+                except Exception as e:
+                    LOG.error(f"Error saving image: {e}")
+                    self.bus.emit(message.response({"error": str(e)}, False))
+            # send data b64 encoded instead
         else:
             self.bus.emit(message.response({"b64_frame": pybase64.b64encode(frame).decode('utf-8')}))
 
