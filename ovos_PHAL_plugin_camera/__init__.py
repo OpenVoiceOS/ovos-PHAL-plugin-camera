@@ -1,11 +1,15 @@
+import os
+from typing import Optional, Iterable
+
 import cv2
 import numpy as np
 import pybase64
 from imutils.video import VideoStream
+
 from ovos_bus_client.message import Message
+from ovos_bus_client.session import SessionManager
 from ovos_plugin_manager.templates.phal import PHALPlugin
 from ovos_utils.log import LOG
-from typing import Optional, Iterable
 
 
 class Camera:
@@ -44,13 +48,16 @@ class Camera:
         """
         return self._camera is not None
 
-    def open(self) -> Optional[VideoStream]:
+    def open(self, force=False) -> Optional[VideoStream]:
         """
         Open the camera based on the detected type.
 
         Returns:
             Optional[VideoStream]: The initialized camera instance, or None if opening failed.
         """
+        if self._camera is not None and not force:
+            return self._camera  # do nothing, camera is open already
+
         if self.camera_type == "libcamera":
             try:
                 from picamera2 import Picamera2  # type: ignore
@@ -84,7 +91,7 @@ class Camera:
             frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Convert RGB to BGR for OpenCV compatibility
             return frame
         else:
-            return self._camera.get()
+            return self._camera.read()
 
     def close(self) -> None:
         """
@@ -131,11 +138,28 @@ class PHALCamera(PHALPlugin):
         config = config or {}
         super().__init__(bus, name, config)
         self.camera = Camera(self.config.get("video_source", 0))
+        self.bus.on("ovos.phal.camera.ping", self.handle_pong)
         self.bus.on("ovos.phal.camera.open", self.handle_open)
         self.bus.on("ovos.phal.camera.close", self.handle_close)
         self.bus.on("ovos.phal.camera.get", self.handle_take_picture)
-        if self.config.get("start_open"):
-            self.camera.open()
+        if self.camera.open() is None:
+            LOG.error("Camera initialization failed")
+            raise RuntimeError("Failed to open camera")
+        if not self.config.get("start_open"):
+            self.camera.close()  # only opened for the check
+
+        # let the system know we have a camera
+        self.bus.emit(Message("ovos.phal.camera.pong"))
+
+    def handle_pong(self, message: Message) -> None:
+        """
+        Let OVOS know camera is available
+
+        Args:
+            message (Message): The incoming message.
+        """
+        if self.validate_message_context(message):
+            self.bus.emit(message.reply("ovos.phal.camera.pong"))
 
     def handle_open(self, message: Message) -> None:
         """
@@ -144,7 +168,8 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        self.camera.open()
+        if self.validate_message_context(message):
+            self.camera.open()
 
     def handle_close(self, message: Message) -> None:
         """
@@ -153,7 +178,8 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        self.camera.close()
+        if self.validate_message_context(message):
+            self.camera.close()
 
     def handle_take_picture(self, message: Message) -> None:
         """
@@ -162,6 +188,10 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
+        if not self.validate_message_context(message):
+            return
+
+        LOG.debug(f"Camera open: {self.camera.is_open}")
         if not self.camera.is_open:
             self.camera.open()
             close = True
@@ -171,13 +201,25 @@ class PHALCamera(PHALPlugin):
         frame = self.camera.get_frame()
         pic_path = message.data.get("path")
         if pic_path:
-            cv2.imwrite(pic_path, frame)
-            self.bus.emit(message.response({"path": pic_path}))
+            try:
+                pic_path = os.path.expanduser(pic_path)
+                # Ensure the directory exists
+                os.makedirs(os.path.dirname(pic_path), exist_ok=True)
+                # Write the image
+                if cv2.imwrite(pic_path, frame):
+                    self.bus.emit(message.response({"path": pic_path}))
+                else:
+                    raise IOError("Failed to write image")
+                LOG.info(f"Picture saved: {pic_path}")
+            except Exception as e:
+                LOG.error(f"Error saving image: {e}")
+                self.bus.emit(message.response({"error": str(e)}, False))
         # send data b64 encoded instead
         else:
             self.bus.emit(message.response({"b64_frame": pybase64.b64encode(frame).decode('utf-8')}))
 
         if close:
+            LOG.debug("Closing camera")
             self.camera.close()
 
     def run(self) -> None:
@@ -186,7 +228,12 @@ class PHALCamera(PHALPlugin):
         """
         if self.config.get("serve_mjpeg"):
             app = MJPEGServer.get_mjpeg_server(self.camera)
-            app.run(host="0.0.0.0")
+            app.run(host="0.0.0.0", port=self.config.get("mjpeg_port", 5000))
+
+    def validate_message_context(self, message):
+        sid = SessionManager.get(message).session_id
+        LOG.debug(f"Request session: {sid}  |  Native Session: {self.bus.session_id}")
+        return sid == self.bus.session_id
 
     def shutdown(self) -> None:
         """
@@ -231,3 +278,4 @@ class MJPEGServer:
             return Response(MJPEGServer.gen_frames(camera), mimetype='multipart/x-mixed-replace; boundary=frame')
 
         return app
+
