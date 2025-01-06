@@ -138,9 +138,14 @@ class PHALCamera(PHALPlugin):
         self.bus.on("ovos.phal.camera.open", self.handle_open)
         self.bus.on("ovos.phal.camera.close", self.handle_close)
         self.bus.on("ovos.phal.camera.get", self.handle_take_picture)
-        if self.config.get("start_open"):
-            self.camera.open()
-        self.bus.emit(Message("ovos.phal.camera.pong"))  # let the system know we have a camera
+        if self.camera.open() is None:
+            LOG.error("Camera initialization failed")
+            raise RuntimeError("Failed to open camera")
+        if not self.config.get("start_open"):
+            self.camera.close()  # only opened for the check
+
+        # let the system know we have a camera
+        self.bus.emit(Message("ovos.phal.camera.pong"))
 
     def handle_pong(self, message: Message) -> None:
         """
