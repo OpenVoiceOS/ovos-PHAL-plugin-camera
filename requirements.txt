@@ -3,4 +3,4 @@ imutils
 opencv_python
 flask
 pybase64
-picamera2; sys_platform == 'linux' and platform_machine == 'armv7l' or platform_machine == 'aarch64'
+picamera2; sys_platform == 'linux' and (platform_machine == 'armv7l' or platform_machine == 'aarch64')
