@@ -186,6 +186,7 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
+        LOG.debug(f"Camera open: {self.camera.is_open}")
         if not self.camera.is_open:
             self.camera.open()
             close = True
@@ -204,6 +205,7 @@ class PHALCamera(PHALPlugin):
                     self.bus.emit(message.response({"path": pic_path}))
                 else:
                     raise IOError("Failed to write image")
+                LOG.info(f"Picture saved: {pic_path}")
             except Exception as e:
                 LOG.error(f"Error saving image: {e}")
                 self.bus.emit(message.response({"error": str(e)}, False))
@@ -212,6 +214,7 @@ class PHALCamera(PHALPlugin):
             self.bus.emit(message.response({"b64_frame": pybase64.b64encode(frame).decode('utf-8')}))
 
         if close:
+            LOG.debug("Closing camera")
             self.camera.close()
 
     def run(self) -> None:
