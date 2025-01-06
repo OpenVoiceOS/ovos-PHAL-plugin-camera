@@ -168,7 +168,8 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        self.camera.open()
+        if validate_message_context(message):
+            self.camera.open()
 
     def handle_close(self, message: Message) -> None:
         """
@@ -177,7 +178,8 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        self.camera.close()
+        if validate_message_context(message):
+            self.camera.close()
 
     def handle_take_picture(self, message: Message) -> None:
         """
@@ -186,6 +188,9 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
+        if not validate_message_context(message):
+            return
+
         LOG.debug(f"Camera open: {self.camera.is_open}")
         if not self.camera.is_open:
             self.camera.open()
