@@ -5,9 +5,9 @@ import cv2
 import numpy as np
 import pybase64
 from imutils.video import VideoStream
-from ovos_config import Configuration
 
 from ovos_bus_client.message import Message
+from ovos_bus_client.session import SessionManager
 from ovos_plugin_manager.templates.phal import PHALPlugin
 from ovos_utils.log import LOG
 
@@ -158,7 +158,7 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        if validate_message_context(message):
+        if self.validate_message_context(message):
             self.bus.emit(message.reply("ovos.phal.camera.pong"))
 
     def handle_open(self, message: Message) -> None:
@@ -168,7 +168,7 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        if validate_message_context(message):
+        if self.validate_message_context(message):
             self.camera.open()
 
     def handle_close(self, message: Message) -> None:
@@ -178,7 +178,7 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        if validate_message_context(message):
+        if self.validate_message_context(message):
             self.camera.close()
 
     def handle_take_picture(self, message: Message) -> None:
@@ -188,7 +188,7 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        if not validate_message_context(message):
+        if not self.validate_message_context(message):
             return
 
         LOG.debug(f"Camera open: {self.camera.is_open}")
@@ -229,6 +229,11 @@ class PHALCamera(PHALPlugin):
         if self.config.get("serve_mjpeg"):
             app = MJPEGServer.get_mjpeg_server(self.camera)
             app.run(host="0.0.0.0", port=self.config.get("mjpeg_port", 5000))
+
+    def validate_message_context(self, message):
+        sid = SessionManager.get(message).session_id
+        LOG.debug(f"Request session: {sid}  |  Native Session: {self.bus.session_id}")
+        return sid == self.bus.session_id
 
     def shutdown(self) -> None:
         """
@@ -274,16 +279,3 @@ class MJPEGServer:
 
         return app
 
-
-def validate_message_context(message, native_sources=None):
-    destination = message.context.get("destination")
-    if destination:
-        native_sources = native_sources or Configuration()["Audio"].get(
-            "native_sources", ["debug_cli", "audio"]) or []
-        if any(s in destination for s in native_sources):
-            # request from device
-            return True
-        # external request, do not handle
-        return False
-    # broadcast for everyone
-    return True
