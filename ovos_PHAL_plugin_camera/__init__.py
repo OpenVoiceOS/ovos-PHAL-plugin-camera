@@ -55,7 +55,7 @@ class Camera:
             Optional[VideoStream]: The initialized camera instance, or None if opening failed.
         """
         if self._camera is not None and not force:
-            return # do nothing, camera is open already
+            return self._camera # do nothing, camera is open already
 
         if self.camera_type == "libcamera":
             try:
