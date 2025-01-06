@@ -92,7 +92,6 @@ The `libcamera` package is not available on PyPI and is installed system-wide on
 | `video_source` | `int`  | `0`       | Index of the video source to use for the camera.      |
 | `start_open`   | `bool` | `false`   | Whether to open the camera at plugin startup.         |
 | `serve_mjpeg`  | `bool` | `false`   | Whether to start an MJPEG server for video streaming. |
-| `mjpeg_host`   | `str`  | `0.0.0.0` | Host address for the MJPEG server.                    |
 | `mjpeg_port`   | `int`  | `5000`    | Port for the MJPEG server.                            |
 
 ---

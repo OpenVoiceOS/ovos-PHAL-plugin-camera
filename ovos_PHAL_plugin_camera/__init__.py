@@ -218,7 +218,7 @@ class PHALCamera(PHALPlugin):
         """
         if self.config.get("serve_mjpeg"):
             app = MJPEGServer.get_mjpeg_server(self.camera)
-            app.run(host="0.0.0.0")
+            app.run(host="0.0.0.0", port=self.config.get("mjpeg_port", 5000))
 
     def shutdown(self) -> None:
         """
