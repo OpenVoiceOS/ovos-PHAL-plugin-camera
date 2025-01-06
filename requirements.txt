@@ -1,0 +1,5 @@
+ovos-plugin-manager~=0.0
+imutils
+opencv_python
+flask
+pybase64
