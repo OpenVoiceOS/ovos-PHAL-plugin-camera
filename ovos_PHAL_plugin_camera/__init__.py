@@ -5,12 +5,12 @@ import cv2
 import numpy as np
 import pybase64
 from imutils.video import VideoStream
-from ovos_bus_client.session import SessionManager
+from ovos_config import Configuration
+
 from ovos_bus_client.message import Message
 from ovos_plugin_manager.templates.phal import PHALPlugin
 from ovos_utils.log import LOG
 
-from ovos_config import Configuration
 
 class Camera:
     def __init__(self, camera_index: int = 0):
@@ -56,7 +56,7 @@ class Camera:
             Optional[VideoStream]: The initialized camera instance, or None if opening failed.
         """
         if self._camera is not None and not force:
-            return self._camera # do nothing, camera is open already
+            return self._camera  # do nothing, camera is open already
 
         if self.camera_type == "libcamera":
             try:
@@ -268,7 +268,6 @@ class MJPEGServer:
             return Response(MJPEGServer.gen_frames(camera), mimetype='multipart/x-mixed-replace; boundary=frame')
 
         return app
-
 
 
 def validate_message_context(message, native_sources=None):
