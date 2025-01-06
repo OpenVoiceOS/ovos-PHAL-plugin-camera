@@ -47,13 +47,16 @@ class Camera:
         """
         return self._camera is not None
 
-    def open(self) -> Optional[VideoStream]:
+    def open(self, force=False) -> Optional[VideoStream]:
         """
         Open the camera based on the detected type.
 
         Returns:
             Optional[VideoStream]: The initialized camera instance, or None if opening failed.
         """
+        if self._camera is not None and not force:
+            return # do nothing, camera is open already
+
         if self.camera_type == "libcamera":
             try:
                 from picamera2 import Picamera2  # type: ignore
