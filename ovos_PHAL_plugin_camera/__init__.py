@@ -1,11 +1,14 @@
+import os
+from typing import Optional, Iterable
+
 import cv2
 import numpy as np
 import pybase64
 from imutils.video import VideoStream
+
 from ovos_bus_client.message import Message
 from ovos_plugin_manager.templates.phal import PHALPlugin
 from ovos_utils.log import LOG
-from typing import Optional, Iterable
 
 
 class Camera:
@@ -131,11 +134,22 @@ class PHALCamera(PHALPlugin):
         config = config or {}
         super().__init__(bus, name, config)
         self.camera = Camera(self.config.get("video_source", 0))
+        self.bus.on("ovos.phal.camera.ping", self.handle_pong)
         self.bus.on("ovos.phal.camera.open", self.handle_open)
         self.bus.on("ovos.phal.camera.close", self.handle_close)
         self.bus.on("ovos.phal.camera.get", self.handle_take_picture)
         if self.config.get("start_open"):
             self.camera.open()
+        self.bus.emit(Message("ovos.phal.camera.pong"))  # let the system know we have a camera
+
+    def handle_pong(self, message: Message) -> None:
+        """
+        Let OVOS know camera is available
+
+        Args:
+            message (Message): The incoming message.
+        """
+        self.bus.emit(message.reply("ovos.phal.camera.pong"))
 
     def handle_open(self, message: Message) -> None:
         """
@@ -171,7 +185,7 @@ class PHALCamera(PHALPlugin):
         frame = self.camera.get_frame()
         pic_path = message.data.get("path")
         if pic_path:
-            cv2.imwrite(pic_path, frame)
+            cv2.imwrite(os.path.expanduser(pic_path), frame)
             self.bus.emit(message.response({"path": pic_path}))
         # send data b64 encoded instead
         else:
