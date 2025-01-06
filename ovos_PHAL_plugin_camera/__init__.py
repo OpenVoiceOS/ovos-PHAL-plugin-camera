@@ -5,11 +5,12 @@ import cv2
 import numpy as np
 import pybase64
 from imutils.video import VideoStream
-
+from ovos_bus_client.session import SessionManager
 from ovos_bus_client.message import Message
 from ovos_plugin_manager.templates.phal import PHALPlugin
 from ovos_utils.log import LOG
 
+from ovos_config import Configuration
 
 class Camera:
     def __init__(self, camera_index: int = 0):
@@ -90,7 +91,7 @@ class Camera:
             frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Convert RGB to BGR for OpenCV compatibility
             return frame
         else:
-            return self._camera.get()
+            return self._camera.read()
 
     def close(self) -> None:
         """
@@ -157,7 +158,8 @@ class PHALCamera(PHALPlugin):
         Args:
             message (Message): The incoming message.
         """
-        self.bus.emit(message.reply("ovos.phal.camera.pong"))
+        if validate_message_context(message):
+            self.bus.emit(message.reply("ovos.phal.camera.pong"))
 
     def handle_open(self, message: Message) -> None:
         """
@@ -263,3 +265,18 @@ class MJPEGServer:
             return Response(MJPEGServer.gen_frames(camera), mimetype='multipart/x-mixed-replace; boundary=frame')
 
         return app
+
+
+
+def validate_message_context(message, native_sources=None):
+    destination = message.context.get("destination")
+    if destination:
+        native_sources = native_sources or Configuration()["Audio"].get(
+            "native_sources", ["debug_cli", "audio"]) or []
+        if any(s in destination for s in native_sources):
+            # request from device
+            return True
+        # external request, do not handle
+        return False
+    # broadcast for everyone
+    return True
