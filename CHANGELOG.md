@@ -1,16 +1,16 @@
 # Changelog
 
-## [0.1.1a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.1.1a1) (2025-01-06)
+## [0.2.0a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.0a1) (2025-01-06)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/V0.1.0...0.1.1a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/V0.1.1...0.2.0a1)
 
 **Merged pull requests:**
 
-- fix:requirements\_rpi [\#1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/1) ([JarbasAl](https://github.com/JarbasAl))
+- feat: session support [\#3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/3) ([JarbasAl](https://github.com/JarbasAl))
 
-## [V0.1.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/V0.1.0) (2025-01-06)
+## [V0.1.1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/V0.1.1) (2025-01-06)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.1.0...V0.1.0)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.1.1...V0.1.1)
 
 
 
