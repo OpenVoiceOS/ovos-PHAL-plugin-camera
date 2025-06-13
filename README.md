@@ -11,6 +11,18 @@ This plugin allows users to interact with cameras using OpenCV or libcamera, tak
 
 ---
 
+## HiveMind Support
+
+This plugin can be used both in OVOS and with [HiveMind](https://github.com/JarbasHiveMind) satellites.
+
+Be sure to allow `"ovos.phal.camera.pong"` in your hivemind for your satellite to be able to report camera support
+
+```bash
+hivemind-core allow-msg "ovos.phal.camera.pong"
+```
+
+---
+
 ## Installation
 
 1. Install required dependencies:
