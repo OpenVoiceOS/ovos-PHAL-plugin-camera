@@ -1,8 +1,20 @@
 # Changelog
 
-## [V0.2.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/V0.2.0) (2025-01-06)
+## [0.2.2a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a1) (2025-12-18)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.0...V0.2.0)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/V0.2.1...0.2.2a1)
+
+**Closed issues:**
+
+- IP camera support [\#5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/issues/5)
+
+**Merged pull requests:**
+
+- chore: Configure Renovate [\#7](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/7) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [V0.2.1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/V0.2.1) (2025-06-13)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.1...V0.2.1)
 
 
 
