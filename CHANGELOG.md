@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a3) (2025-12-20)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a2...0.2.2a3)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency ovos-plugin-manager to v2 [\#14](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/14) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.2.2a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a2) (2025-12-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a1...0.2.2a2)
