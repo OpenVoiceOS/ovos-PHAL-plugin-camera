@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2a6](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a6) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a4...0.2.2a6)
+
+**Merged pull requests:**
+
+- chore: add missing shared CI workflows [\#17](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/17) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.2a4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a4) (2026-01-09)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a5...0.2.2a4)
@@ -33,10 +41,6 @@
 ## [0.2.2a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a1) (2025-12-18)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/V0.2.1...0.2.2a1)
-
-**Closed issues:**
-
-- IP camera support [\#5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/issues/5)
 
 **Merged pull requests:**
 
