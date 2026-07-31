@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos-PHAL-plugin-camera"
+dynamic = ["version"]
+description = "Expose camera to OVOS"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "JarbasAi", email = "jarbasai@mailfence.com"}
+]
+keywords = ["ovos", "phal", "plugin"]
+dependencies = [
+    "ovos-plugin-manager>=2.1.0,<3.0.0",
+    "imutils",
+    "opencv_python",
+    "flask",
+    "pybase64",
+    "picamera2; sys_platform == 'linux' and (platform_machine == 'armv7l' or platform_machine == 'aarch64')"
+]
+
+[project.urls]
+Homepage = "https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera"
+
+[project.entry-points."opm.phal"]
+"ovos-PHAL-plugin-camera" = "ovos_PHAL_plugin_camera:PHALCamera"
+
+[tool.setuptools.dynamic]
+version = {attr = "ovos_PHAL_plugin_camera.version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ovos_PHAL_plugin_camera*"]
+
+[tool.setuptools.package-data]
+ovos_PHAL_plugin_camera = [
+    "*.json",
+]

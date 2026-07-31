@@ -1,8 +1,70 @@
 # Changelog
 
-## [V0.2.0](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/V0.2.0) (2025-01-06)
+## [0.2.3a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.3a2) (2026-07-31)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.0...V0.2.0)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.3a1...0.2.3a2)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#22](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/22) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.3a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.3a1) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a6...0.2.3a1)
+
+**Merged pull requests:**
+
+- fix: require ovos-plugin-manager\>=2.1.0 for opm.\* entry points and cap ovos-\* deps at next major [\#20](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/20) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.2a6](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a6) (2026-06-16)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a4...0.2.2a6)
+
+**Merged pull requests:**
+
+- chore: add missing shared CI workflows [\#17](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/17) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.2a4](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a4) (2026-01-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a5...0.2.2a4)
+
+## [0.2.2a5](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a5) (2026-01-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a3...0.2.2a5)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency ovos-plugin-manager to \<2.1.2 [\#16](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/16) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update actions/setup-python action to v6 [\#13](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/13) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update actions/checkout action to v6 [\#12](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/12) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.2.2a3](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a3) (2025-12-20)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a2...0.2.2a3)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency ovos-plugin-manager to v2 [\#14](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/14) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.2.2a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a2) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a1...0.2.2a2)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency python to 3.14 [\#8](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/8) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.2.2a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.2a1) (2025-12-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/V0.2.1...0.2.2a1)
+
+**Merged pull requests:**
+
+- chore: Configure Renovate [\#7](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/7) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [V0.2.1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/V0.2.1) (2025-06-13)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.1...V0.2.1)
 
 
 
