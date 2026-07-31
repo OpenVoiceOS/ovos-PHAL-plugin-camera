@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.3a2](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.3a2) (2026-07-31)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.3a1...0.2.3a2)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#22](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/pull/22) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.3a1](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/tree/0.2.3a1) (2026-06-16)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera/compare/0.2.2a6...0.2.3a1)
